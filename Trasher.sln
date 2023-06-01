@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trasher.API", "Trasher.API\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trasher.BLL", "Trasher.BLL\Trasher.BLL.csproj", "{617ED76C-5920-4F15-8BFC-1795D4F38992}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trasher.Domain", "Trasher.Domain\Trasher.Domain.csproj", "{BABDF2A9-EEE6-4246-87F6-5D0F09303B9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trasher.Domain", "Trasher.Domain\Trasher.Domain.csproj", "{BABDF2A9-EEE6-4246-87F6-5D0F09303B9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trasher.API.MODELS", "Trasher.API.MODELS\Trasher.API.MODELS.csproj", "{115C6E2E-B6DA-4292-AC26-EBB9E553C8AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{BABDF2A9-EEE6-4246-87F6-5D0F09303B9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BABDF2A9-EEE6-4246-87F6-5D0F09303B9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BABDF2A9-EEE6-4246-87F6-5D0F09303B9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{115C6E2E-B6DA-4292-AC26-EBB9E553C8AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{115C6E2E-B6DA-4292-AC26-EBB9E553C8AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{115C6E2E-B6DA-4292-AC26-EBB9E553C8AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{115C6E2E-B6DA-4292-AC26-EBB9E553C8AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

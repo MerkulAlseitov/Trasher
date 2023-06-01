@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using Trasher.Domain.Common;
 using Trasher.Domain.DTOs;
 using Trasher.Domain.Users;
 
 namespace Trasher.API.Mapping
 {
-    public class MappingProfile : Profile
+    public class MappingProfile<T, TModel>
+        where T : BaseEntity
+        where TModel : BaseEntityDTO
     {
         public static void Main()
         {
@@ -17,6 +20,5 @@ namespace Trasher.API.Mapping
             OperatorDTO source = new OperatorDTO {};
             Operator destination = mapper.Map<OperatorDTO, Operator>(source);
         }
-
     }
 }

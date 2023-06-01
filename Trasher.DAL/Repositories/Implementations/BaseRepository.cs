@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Trasher.DAL.Repositories.Interfaces;
+using Trasher.Domain.Common;
 
 namespace Trasher.DAL.Repositories.Implementations
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    public class BaseRepository<T> : IBaseRepository<T>
+        where T : BaseEntity
     {
         private readonly DbContext _context;
         private readonly DbSet<T> _dbSet;
@@ -45,9 +47,16 @@ namespace Trasher.DAL.Repositories.Implementations
 
         public async Task<List<T>> AddAllAsync(IEnumerable<T> items)
         {
-            await _dbSet.AddRangeAsync(items);
+            List<T> result = new List<T>();
+
+            foreach (T item in items)
+            {
+                EntityEntry<T> entityEntry = await _dbSet.AddAsync(item);
+                T entity = entityEntry.Entity;
+                result.Add(entity);
+            }
             await _context.SaveChangesAsync();
-            return items.ToList();
+            return result;
         }
 
         public async Task<List<T>> GetAllAsync()
@@ -57,13 +66,19 @@ namespace Trasher.DAL.Repositories.Implementations
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            T item = await _dbSet
+                .FirstOrDefaultAsync(obj => obj.Id.Equals(id));
+
+            return item == null
+                ? throw new ArgumentNullException(nameof(id), $"Entity not found by id {id}")
+                : item;
         }
 
         public async Task Update(T item)
         {
-            _context.Entry(item).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            _dbSet.Update(item);
+
+            _context.SaveChanges();
         }
 
         public async Task Delete(T item)
