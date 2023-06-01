@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Trasher.Domain.Common
 {
-    public class AppUser : IdentityUser
+    public class AppUser : IdentityUser<int>
     {
         public string? RefreshToken { get; set; }
         public DateTime RefreshTokenExpiredTime { get; set; }

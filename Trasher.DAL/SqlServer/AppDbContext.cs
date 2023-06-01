@@ -5,7 +5,7 @@ using Trasher.Domain.Users;
 
 namespace Trasher.DAL.SqlServer
 {
-    public abstract class AppDbContext : IdentityDbContext
+    public class AppDbContext : IdentityDbContext
     {
         public DbSet<Client> Clients { get; set; }
         public DbSet<Brigade> Brigades { get; set; }
@@ -13,7 +13,7 @@ namespace Trasher.DAL.SqlServer
         public DbSet<Order> Orders { get; set; }
         public DbSet<Review> Reviews { get; set; }
 
-        protected AppDbContext(DbContextOptions<AppDbContext> options):base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
         {
 
         }
