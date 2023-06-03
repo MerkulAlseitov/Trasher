@@ -10,7 +10,7 @@ namespace Trasher.BLL.Interfaces
 {
     public interface IReviewService
     {
-        public Task<IResponse<IEnumerable<ReviewDTO>>> GetReviewsByRequestId(int requestId);
+        public IResponse<IEnumerable<ReviewDTO>> GetReviewsByOrderId(int OrderId);
 
         public Task<IResponse<bool>> CreateReview(ReviewDTO review);
 

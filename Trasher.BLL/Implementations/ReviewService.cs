@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Storage.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trasher.API.Mapping;
 using Trasher.API.MODELS.Response;
 using Trasher.BLL.Interfaces;
 using Trasher.DAL.Repositories.Interfaces;
@@ -20,13 +22,13 @@ namespace Trasher.BLL.Implementations
             _reviewRepository = reviewRepository;
         }
 
-        public async Task<IResponse<IEnumerable<ReviewDTO>>> GetReviewsByRequestId(int OrderId)
+        public  IResponse<IEnumerable<ReviewDTO>> GetReviewsByOrderId(int OrderId)
         {
             try
             {
-                // Ваша логика для получения отзывов по идентификатору запроса
-                var reviews = await _reviewRepository.GetAllAsync().Result.Where(review => review.Order.Id == OrderId).ToList();
-                return new Response<IEnumerable<ReviewDTO>>(200, null, true, reviews);
+                var reviews =  _reviewRepository.GetAllAsync().Result.Where(review => review.Order.Id == OrderId).ToList();
+                var reviewsDTO = Mapper<Review, ReviewDTO>.Map(reviews);
+                return new Response<IEnumerable<ReviewDTO>>(200, null, true, reviewsDTO);
             }
             catch (Exception ex)
             {
@@ -34,12 +36,19 @@ namespace Trasher.BLL.Implementations
             }
         }
 
-        public async Task<IResponse<bool>> CreateReview(ReviewDTO review)
+        public async Task<IResponse<bool>> CreateReview(ReviewDTO reviewDTO)
         {
             try
             {
-                // Ваша логика для создания нового отзыва
-                await _reviewRepository.Create(review);
+                if (reviewDTO == null) 
+                {
+                    throw new ArgumentNullException("Review is null.");
+                }
+
+                var newReview = DTOMapper<ReviewDTO, Review>.Map(reviewDTO);
+                await _reviewRepository.AddAsync(newReview);
+                await _reviewRepository.Update(newReview);
+
                 return new Response<bool>(200, null, true, true);
             }
             catch (Exception ex)
@@ -48,12 +57,18 @@ namespace Trasher.BLL.Implementations
             }
         }
 
-        public async Task<IResponse<bool>> UpdateReview(ReviewDTO review)
+        public async Task<IResponse<bool>> UpdateReview(ReviewDTO reviewDTO)
         {
             try
             {
-                // Ваша логика для обновления существующего отзыва
-                await _reviewRepository.Update(review);
+                if (reviewDTO == null)
+                {
+                    throw new ArgumentNullException("Review is null.");
+                }
+
+                var newReview = DTOMapper<ReviewDTO, Review>.Map(reviewDTO);
+                await _reviewRepository.Update(newReview);
+
                 return new Response<bool>(200, null, true, true);
             }
             catch (Exception ex)
