@@ -11,4 +11,9 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Trasher.API.MODELS\Trasher.API.MODELS.csproj" />
+    <ProjectReference Include="..\Trasher.Domain\Trasher.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

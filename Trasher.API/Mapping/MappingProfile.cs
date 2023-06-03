@@ -9,16 +9,16 @@ namespace Trasher.API.Mapping
         where T : BaseEntity
         where TModel : BaseEntityDTO
     {
-        public static void Main()
-        {
-            var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<OperatorDTO, Operator>();
-            });
+        //public static void Main()
+        //{
+        //    var config = new MapperConfiguration(cfg => {
+        //        cfg.CreateMap<OperatorDTO, Operator>();
+        //    });
 
-            IMapper mapper = config.CreateMapper();
+        //    IMapper mapper = config.CreateMapper();
 
-            OperatorDTO source = new OperatorDTO {};
-            Operator destination = mapper.Map<OperatorDTO, Operator>(source);
-        }
+        //    OperatorDTO source = new OperatorDTO {};
+        //    Operator destination = mapper.Map<OperatorDTO, Operator>(source);
+        //}
     }
 }
