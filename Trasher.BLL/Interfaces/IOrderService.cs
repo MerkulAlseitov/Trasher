@@ -15,7 +15,7 @@ namespace Trasher.BLL.Interfaces
  public Task<IResponse<IEnumerable<OrderDTO>>> GetUnassignedRequests();
 
 
-  public Task<IResponse<bool>> AssignRequestToTeam(int orderId, string brigadeId);
+  public Task<IResponse<bool>> AssignOrderToBrigade(int orderId, string brigadeId);
 
         public Task<IResponse<bool>> AssignRequestToOperator(int orderId, string operatorId);
 
