@@ -7,13 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Implementations\" />
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\Trasher.API.MODELS\Trasher.API.MODELS.csproj" />
+    <ProjectReference Include="..\Trasher.DAL\Trasher.DAL.csproj" />
+    <ProjectReference Include="..\Trasher.Domain\Trasher.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Trasher.API.MODELS\Trasher.API.MODELS.csproj" />
-    <ProjectReference Include="..\Trasher.Domain\Trasher.Domain.csproj" />
+    <Folder Include="qwe\" />
   </ItemGroup>
 
 </Project>

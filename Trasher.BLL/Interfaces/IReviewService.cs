@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Trasher.API.MODELS.Response;
 using Trasher.Domain.DTOs;
 
-namespace Trasher.BLL.Implementations
+namespace Trasher.BLL.Interfaces
 {
     public interface IReviewService
     {
