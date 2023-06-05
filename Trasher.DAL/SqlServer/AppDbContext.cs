@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Trasher.Domain.Common;
 using Trasher.Domain.Entities.Orders;
 using Trasher.Domain.Users;
 
 namespace Trasher.DAL.SqlServer
 {
-    public class AppDbContext : IdentityDbContext
+    public class AppDbContext : IdentityDbContext<User>
     {
         public DbSet<Client> Clients { get; set; }
         public DbSet<Brigade> Brigades { get; set; }

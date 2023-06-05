@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Trasher.API.MODELS.Response;
 using Trasher.Domain.DTOs;
+using Trasher.Domain.Entities.Orders;
 
 namespace Trasher.BLL.Interfaces
 {
