@@ -9,8 +9,7 @@ namespace Trasher.Domain.DTOs
 {
     public class OperatorDTO
     {
-        public string? RefreshToken { get; set; }
-        public DateTime RefreshTokenExpiredTime { get; set; }
+        public string UserName { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string Email { get; set; }

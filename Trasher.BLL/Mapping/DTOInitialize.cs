@@ -2,17 +2,17 @@
 using Trasher.Domain.Common;
 using Trasher.Domain.DTOs;
 
-namespace Trasher.API.Mapping
+namespace Trasher.BLL.Mapping
 {
-    public static class Initialize<T, Tmodel>
-    where T : BaseEntity
-    where Tmodel : BaseEntityDTO
+    public static class DTOInitialize<Tmodel, T>
+   where Tmodel : BaseEntityDTO
+   where T : BaseEntity
     {
         public static IMapper InitializeMapper()
         {
             var mapperConfiguration = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Tmodel, T>();
+                cfg.CreateMap<T, Tmodel>();
             });
             return mapperConfiguration.CreateMapper();
         }

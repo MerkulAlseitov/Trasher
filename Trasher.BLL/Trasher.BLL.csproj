@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,14 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Trasher.API.MODELS\Trasher.API.MODELS.csproj" />
-    <ProjectReference Include="..\Trasher.API\Trasher.API.csproj" />
-    <ProjectReference Include="..\Trasher.DAL\Trasher.DAL.csproj" />
-    <ProjectReference Include="..\Trasher.Domain\Trasher.Domain.csproj" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="qwe\" />
+    <ProjectReference Include="..\Trasher.API.MODELS\Trasher.API.MODELS.csproj" />
+    <ProjectReference Include="..\Trasher.DAL\Trasher.DAL.csproj" />
+    <ProjectReference Include="..\Trasher.Domain\Trasher.Domain.csproj" />
   </ItemGroup>
 
 </Project>

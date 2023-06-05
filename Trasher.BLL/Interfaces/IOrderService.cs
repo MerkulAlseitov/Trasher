@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,17 +11,11 @@ namespace Trasher.BLL.Interfaces
 {
     public interface IOrderService
     {
- public Task<IResponse<IEnumerable<OrderDTO>>> GetUnassignedRequests();
-
-
-  public Task<IResponse<bool>> AssignOrderToBrigade(int orderId, string brigadeId);
-
-        public Task<IResponse<bool>> AssignRequestToOperator(int orderId, string operatorId);
-
-        public Task<IResponse<bool>> CreateRequest(OrderDTO order);
-
-        public Task<IResponse<bool>> UpdateRequest(OrderDTO order);
-
-        public Task<IResponse<bool>> ChangeRequestStatus(int orderId, OrderStatus newStatus);
+        public Task<IResponse<IEnumerable<OrderDTO>>> GetUnassignedOrder();
+        public Task<IResponse<bool>> AssignOrderToBrigade(int orderId, string brigadeId);
+        public Task<IResponse<bool>> AssignOrderToOperator(int orderId, string operatorId);
+        public Task<IResponse<bool>> CreateOrder(OrderDTO order);
+        public Task<IResponse<bool>> UpdateOrder(OrderDTO order);
+        public Task<IResponse<bool>> ChangeOrderStatus(int orderId, OrderStatus newStatus);
     }
 }

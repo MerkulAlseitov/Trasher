@@ -2,7 +2,7 @@
 using Trasher.Domain.Common;
 using Trasher.Domain.DTOs;
 
-namespace Trasher.API.Mapping
+namespace Trasher.BLL.Mapping
 {
     public class Mapper<T, Tmodel>
     where T : BaseEntity

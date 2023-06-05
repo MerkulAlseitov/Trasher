@@ -1,23 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Trasher.API.Mapping;
 using Trasher.API.MODELS.Response;
 using Trasher.BLL.Interfaces;
+using Trasher.BLL.Mapping;
 using Trasher.DAL.Repositories.Interfaces;
 using Trasher.Domain.DTOs;
 using Trasher.Domain.Entities.Orders;
 using Trasher.Domain.Enums;
 using Trasher.Domain.Users;
 
+
 namespace Trasher.BLL.Implementations
 {
-
-    public class OrderService : IOrderService
-    {
+        public class OrderService : IOrderService
+           {
         private readonly IBaseRepository<Order> _orderRepository;
         private readonly UserManager<Client> _userManager;
         public OrderService(IBaseRepository<Order> reviewRepository,
@@ -26,13 +21,13 @@ namespace Trasher.BLL.Implementations
             _orderRepository = reviewRepository;
             _userManager = userManager;
         }
-        public async Task<IResponse<bool>> AssignRequestToOperator(int orderId, string operatorId)
+        public async Task<IResponse<bool>> AssignOrderToOperator(int orderId, string operatorId)
         {
             try
             {
                 var closedOrder = _orderRepository
                .GetAllAsync().Result
-               .Where(r => r.OperatorId == operatorId && r.OrderStatus == OrderStatus.Compleated)
+               .Where(r => r.OperatorId == operatorId && r.OrderStatus == OrderStatus.Completed)
                .ToList();
 
                 IEnumerable<OrderDTO> closedOrderDTO = Mapper<Order, OrderDTO>.Map(closedOrder);
@@ -61,15 +56,15 @@ namespace Trasher.BLL.Implementations
             }
         }
 
-        public async Task<IResponse<bool>> ChangeRequestStatus(int orderId, OrderStatus newStatus)
+        public async Task<IResponse<bool>> ChangeOrderStatus(int orderId, OrderStatus newStatus)
         {
 
             try
             {
-                var request = await _orderRepository.GetByIdAsync(orderId);
+                var order = await _orderRepository.GetByIdAsync(orderId);
 
-                request.OrderStatus = newStatus;
-                await _orderRepository.Update(request);
+                order.OrderStatus = newStatus;
+                await _orderRepository.Update(order);
 
                 return new Response<bool>(200, null, true, true);
             }
@@ -79,16 +74,16 @@ namespace Trasher.BLL.Implementations
             }
         }
 
-        public async Task<IResponse<bool>> CreateRequest(OrderDTO order)
+        public async Task<IResponse<bool>> CreateOrder(OrderDTO order)
         {
             try
             {
-                var newRequest = DTOMapper<OrderDTO, Order>.Map(order);
+                var newOrder = DTOMapper<OrderDTO, Order>.Map(order);
 
-                var client = await _userManager.FindByIdAsync(newRequest.ClientId);
-                newRequest.Client = client;
+                var client = await _userManager.FindByIdAsync(newOrder.ClientId);
+                newOrder.Client = client;
 
-                await _orderRepository.Update(newRequest);
+                await _orderRepository.Update(newOrder);
                 return new Response<bool>(200, null, true, true);
             }
             catch (Exception ex)
@@ -97,7 +92,7 @@ namespace Trasher.BLL.Implementations
             }
         }
 
-        public async Task<IResponse<IEnumerable<OrderDTO>>> GetUnassignedRequests()
+        public async Task<IResponse<IEnumerable<OrderDTO>>> GetUnassignedOrder()
         {
             try
             {
@@ -115,7 +110,7 @@ namespace Trasher.BLL.Implementations
             }
         }
 
-        public async Task<IResponse<bool>> UpdateRequest(OrderDTO order)
+        public async Task<IResponse<bool>> UpdateOrder(OrderDTO order)
         {
             try
             {
