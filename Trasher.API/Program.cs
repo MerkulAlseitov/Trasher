@@ -16,8 +16,11 @@ var connection = builder.Configuration.GetConnectionString("ConnectionString");
 
 builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(connection), ServiceLifetime.Scoped);
 
-builder.Services.AddScoped<IBaseRepository<Order>, BaseRepository<Order>>();
+
+builder.Services.AddScoped<IBaseRepository<Order>>(provider => new BaseRepository<Order>(provider.GetService<AppDbContext>()));
 builder.Services.AddScoped<IOrderService, OrderService>();
+
+
 builder.Services.AddIdentity<Client, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
@@ -26,8 +29,10 @@ builder.Services.AddScoped<IUserStore<Client>, UserStore<Client, IdentityRole, A
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDefaultIdentity<User>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
-builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddDefaultIdentity<Client>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
+
 
 var app = builder.Build();
 
