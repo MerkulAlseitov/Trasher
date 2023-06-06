@@ -14,12 +14,13 @@ namespace Trasher.API.Controllers
     {
         private readonly IOrderService _iorderService;
 
-        public OrderController(OrderService orderService)
+        public OrderController(IOrderService orderService)
         {
             _iorderService = orderService;
         }
 
         [HttpPost]
+        [Route("CreateOrder")]
         public async Task<IActionResult> CreateOrder(OrderDTO order)
         {
             var response = await _iorderService.CreateOrder(order);

@@ -81,9 +81,10 @@ namespace Trasher.BLL.Implementations
                 var newOrder = DTOMapper<OrderDTO, Order>.Map(order);
 
                 var client = await _userManager.FindByIdAsync(newOrder.ClientId);
-                newOrder.Client = client;
+                newOrder.ClientId = client.Id;
 
-                await _orderRepository.Update(newOrder);
+                await _orderRepository.AddAsync(newOrder);
+
                 return new Response<bool>(200, null, true, true);
             }
             catch (Exception ex)

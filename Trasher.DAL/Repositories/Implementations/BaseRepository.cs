@@ -78,7 +78,7 @@ namespace Trasher.DAL.Repositories.Implementations
         {
             _dbSet.Update(item);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(T item)
