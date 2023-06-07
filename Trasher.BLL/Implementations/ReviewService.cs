@@ -10,17 +10,19 @@ namespace Trasher.BLL.Implementations
     public class ReviewService : IReviewService
     {
         private readonly IBaseRepository<Review> _reviewRepository;
+        private readonly IBaseRepository<Order> _orderRepository;   
 
-        public ReviewService(IBaseRepository<Review> reviewRepository)
+        public ReviewService(IBaseRepository<Review> reviewRepository, IBaseRepository<Order> orderRepository)
         {
             _reviewRepository = reviewRepository;
+            _orderRepository = orderRepository;
         }
 
         public IResponse<IEnumerable<ReviewDTO>> GetReviewsByOrderId(int OrderId)
         {
             try
             {
-                var reviews = _reviewRepository.GetAllAsync().Result.Where(review => review.Order.Id == OrderId).ToList();
+                var reviews = _reviewRepository.GetAllAsync().Result.Where( r => r.Id == OrderId).ToList();
                 var reviewsDTO = DTOMapper<Review, ReviewDTO>.Map(reviews);
                 return new Response<IEnumerable<ReviewDTO>>(200, null, true, reviewsDTO);
             }
@@ -34,14 +36,21 @@ namespace Trasher.BLL.Implementations
         {
             try
             {
-                if (reviewDTO == null)
-                {
-                    throw new ArgumentNullException("Review is null.");
-                }
-
                 var newReview = Mapper<ReviewDTO, Review>.Map(reviewDTO);
+
+                var order = _orderRepository.GetAllAsync().Result
+                    .FirstOrDefault(order => order.Id == reviewDTO.orderId);
+
+                //if (request == null  request.OrderStatus != OrderStatus.Completed  request.Review != null)
+                //    throw new InvalidOperationException("Unable to create a review for the specified request.");
+
+
+                order.ReviewId = newReview.Id;
+                order.Review = newReview;
+
                 await _reviewRepository.AddAsync(newReview);
-                await _reviewRepository.Update(newReview);
+
+                await _orderRepository.Update(order);
 
                 return new Response<bool>(200, null, true, true);
             }
@@ -50,7 +59,6 @@ namespace Trasher.BLL.Implementations
                 return new Response<bool>(500, ex.Message, false, false);
             }
         }
-
         public async Task<IResponse<bool>> UpdateReview(ReviewDTO reviewDTO)
         {
             try
@@ -60,7 +68,7 @@ namespace Trasher.BLL.Implementations
                     throw new ArgumentNullException("Review is null.");
                 }
 
-                var newReview = DTOMapper<Review, ReviewDTO>.Map(reviewDTO);
+                var newReview = Mapper<ReviewDTO, Review>.Map(reviewDTO);
                 await _reviewRepository.Update(newReview);
 
                 return new Response<bool>(200, null, true, true);

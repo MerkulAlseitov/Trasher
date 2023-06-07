@@ -172,20 +172,6 @@ namespace Trasher.BLL.Implementations
             }
         }
 
-        public async Task<IResponse<IEnumerable<Operator>>> GetAllAsync()
-        {
-            try
-            {
-                var operators = await _userManager.GetUsersInRoleAsync("Operator");
-
-                return new Response<IEnumerable<Operator>>(200, null, true, operators);
-            }
-            catch (Exception ex)
-            {
-                return new Response<IEnumerable<Operator>>(500, ex.Message, false, null);
-            }
-        }
-
         public async Task<IResponse<bool>> UpdateAsync(Operator user)
         {
             try
@@ -228,6 +214,19 @@ namespace Trasher.BLL.Implementations
             catch (Exception ex)
             {
                 return new Response<bool>(500, ex.Message, false, false);
+            }
+        }
+        public async Task<IResponse<IEnumerable<Operator>>> GetAllAsync()
+        {
+            try
+            {
+                var operators = _userManager.Users.ToList();
+
+                return new Response<IEnumerable<Operator>>(200, null, true, operators);
+            }
+            catch (Exception ex)
+            {
+                return new Response<IEnumerable<Operator>>(500, ex.Message, false, null);
             }
         }
     }

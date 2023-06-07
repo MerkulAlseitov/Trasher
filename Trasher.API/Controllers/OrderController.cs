@@ -89,14 +89,25 @@ namespace Trasher.API.Controllers
 
         [HttpPost]
         [Route("AssignOrderToOperator")]
-        public async Task<IActionResult> AssignOrderToOperator(int orderId, string brigadeId)
+        public async Task<IActionResult> AssignOrderToOperator(int orderId, string operatorid)
         {
-            var response = await _iorderService.AssignOrderToOperator(orderId, brigadeId);
+            var response = await _iorderService.AssignOrderToOperator(orderId, operatorid);
             if (response.IsSuccess)
             {
                 return Ok(response.Data);
             }
 
+            return StatusCode(response.StatusCode, response.ErrorMassage);
+        }
+        [HttpGet]
+        [Route("GetAllOrders")]
+        public async Task<IActionResult> GetAllOrders()
+        {
+            var response = await _iorderService.GetAll();
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
             return StatusCode(response.StatusCode, response.ErrorMassage);
         }
     }

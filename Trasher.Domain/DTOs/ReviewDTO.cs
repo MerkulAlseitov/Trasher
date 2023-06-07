@@ -11,5 +11,6 @@ namespace Trasher.Domain.DTOs
     {
         public string? ReviewText { get; set; }
         public int Score { get; set; }
+        public int orderId { get; set; }
     }
 }

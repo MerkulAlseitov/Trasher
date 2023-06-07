@@ -25,12 +25,11 @@ namespace Trasher.BLL.Implementations
         {
             try
             {
-                var closedOrder = _orderRepository
-               .GetAllAsync().Result
-               .Where(r => r.OperatorId == operatorId && r.OrderStatus == OrderStatus.Completed)
-               .ToList();
+                var order = await _orderRepository.GetByIdAsync(orderId);
 
-                IEnumerable<OrderDTO> closedOrderDTO = DTOMapper<Order, OrderDTO>.Map(closedOrder);
+                order.OperatorId = operatorId;
+                await _orderRepository.Update(order);
+
                 return new Response<bool>(200, null, true, true);
             }
             catch (Exception ex)
@@ -98,13 +97,13 @@ namespace Trasher.BLL.Implementations
         {
             try
             {
-                var unassignedRequests = _orderRepository
+                var unassignedOrders = _orderRepository
                                  .GetAllAsync().Result
-                                 .Where(request => request.OrderStatus == OrderStatus.InProgress && request.OperatorId == null && request.BrigadeId == null);
+                                 .Where(order => order.OrderStatus == OrderStatus.Awaiting && order.OperatorId == null && order.BrigadeId == null);
 
-                IEnumerable<OrderDTO> unassignedRequestsDTO = DTOMapper<Order, OrderDTO>.Map(unassignedRequests);
+                IEnumerable<OrderDTO> unassignedOrdersDTO = DTOMapper<Order, OrderDTO>.Map(unassignedOrders);
 
-                return new Response<IEnumerable<OrderDTO>>(200, null, true, unassignedRequestsDTO);
+                return new Response<IEnumerable<OrderDTO>>(200, null, true, unassignedOrdersDTO);
             }
             catch (Exception ex)
             {
@@ -123,6 +122,20 @@ namespace Trasher.BLL.Implementations
             catch (Exception ex)
             {
                 return new Response<bool>(500, ex.Message, false, false);
+            }
+        }
+        public async Task<IResponse<IEnumerable<Order>>> GetAll()
+        {
+            try
+            {
+                var entities = await _orderRepository.GetAllAsync();
+
+                return new Response<IEnumerable<Order>>(200, null, true, entities);
+            }
+
+            catch (Exception ex)
+            {
+                return new Response<IEnumerable<Order>>(500, ex.Message, true, null);
             }
         }
     }

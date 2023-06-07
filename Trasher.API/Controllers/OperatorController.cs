@@ -63,17 +63,6 @@ namespace Trasher.API.Controllers
             return BadRequest(response.ErrorMassage);
         }
 
-        [HttpGet("GetAllOperators")]
-        public async Task<ActionResult<IResponse<IEnumerable<Operator>>>> GetAllOperators()
-        {
-            var response = await _ioperatorService.GetAllAsync();
-            if (response.IsSuccess)
-            {
-                return Ok(response.Data);
-            }
-            return BadRequest(response.ErrorMassage);
-        }
-
         [HttpPut("UpdateOperator")]
         public async Task<ActionResult<IResponse<bool>>> UpdateOperator([FromBody] Operator user)
         {
@@ -113,6 +102,19 @@ namespace Trasher.API.Controllers
         public async Task<IActionResult> CreateOperator([FromBody] OperatorDTO ooperator)
         {
             IResponse<Operator> response = await _ioperatorService.CreateOperator(ooperator);
+
+            if (response.IsSuccess)
+            {
+                return Ok(response.Data);
+            }
+
+            return BadRequest(response.ErrorMassage);
+        }
+        [HttpGet]
+        [Route("GetAllOperators")]
+        public async Task<IActionResult> GetAllOperators()
+        {
+            IResponse<IEnumerable<Operator>> response = await _ioperatorService.GetAllAsync();
 
             if (response.IsSuccess)
             {

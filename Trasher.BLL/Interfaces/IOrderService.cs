@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Trasher.API.MODELS.Response;
 using Trasher.Domain.DTOs;
+using Trasher.Domain.Entities.Orders;
 using Trasher.Domain.Enums;
 
 namespace Trasher.BLL.Interfaces
@@ -17,5 +18,6 @@ namespace Trasher.BLL.Interfaces
         public Task<IResponse<bool>> CreateOrder(OrderDTO order);
         public Task<IResponse<bool>> UpdateOrder(OrderDTO order);
         public Task<IResponse<bool>> ChangeOrderStatus(int orderId, OrderStatus newStatus);
+        public Task<IResponse<IEnumerable<Order>>> GetAll();
     }
 }

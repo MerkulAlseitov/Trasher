@@ -18,13 +18,12 @@ namespace Trasher.BLL.Interfaces
         Task<IResponse<bool>> AcceptOrder(int orderId, string Id);
 
         Task<IResponse<bool>> MarkOrderAsCompleted(int orderId);
-
-        Task<IResponse<IEnumerable<Operator>>> GetAllAsync();
-
         Task<IResponse<bool>> UpdateAsync(Operator user);
 
         Task<IResponse<bool>> CloseOrderByOperator(int orderId, string Id);
         Task<IResponse<Operator>> CreateOperator(OperatorDTO operatorDTO);
         Task<IResponse<Brigade>> CreateBrigade(BrigadeDTO bdrigademodel);
+        Task<IResponse<IEnumerable<Operator>>> GetAllAsync();
+
     }
 }
