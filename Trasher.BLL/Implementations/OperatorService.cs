@@ -16,8 +16,8 @@ namespace Trasher.BLL.Implementations
         private readonly UserManager<Operator> _userManager;
         private readonly UserManager<Brigade> _userManagerBrigade;
 
-        public OperatorService(IBaseRepository<Order> orderRepository, 
-            UserManager<Operator> userManager, 
+        public OperatorService(IBaseRepository<Order> orderRepository,
+            UserManager<Operator> userManager,
             UserManager<Brigade> userManagerBrigade)
         {
             _orderRepository = orderRepository;
@@ -98,8 +98,7 @@ namespace Trasher.BLL.Implementations
                 var activeOrders = _orderRepository.GetAllAsync().Result
                     .Where(o => o.OperatorId == Id && o.OrderStatus == OrderStatus.InProgress);
 
-                var activeOrdersDTO = Mapper<Order, OrderDTO>.Map(activeOrders);
-
+                var activeOrdersDTO = DTOMapper<Order, OrderDTO>.Map(activeOrders);
                 return new Response<IEnumerable<OrderDTO>>(200, null, true, activeOrdersDTO);
             }
             catch (Exception ex)
@@ -115,7 +114,7 @@ namespace Trasher.BLL.Implementations
                 var closedOrders = _orderRepository.GetAllAsync().Result
                     .Where(o => o.OperatorId == Id && o.OrderStatus == OrderStatus.Completed);
 
-                var closedOrdersDTO = Mapper<Order, OrderDTO>.Map(closedOrders);
+                var closedOrdersDTO = DTOMapper<Order, OrderDTO>.Map(closedOrders);
 
                 return new Response<IEnumerable<OrderDTO>>(200, null, true, closedOrdersDTO);
             }
@@ -217,7 +216,6 @@ namespace Trasher.BLL.Implementations
 
                 if (order == null)
                     return new Response<bool>(404, "Order not found", false, false);
-
                 if (order.OperatorId != Id)
                     return new Response<bool>(403, "You are not authorized to close this order", false, false);
 

@@ -11,8 +11,8 @@ using Trasher.Domain.Users;
 
 namespace Trasher.BLL.Implementations
 {
-        public class OrderService : IOrderService
-           {
+    public class OrderService : IOrderService
+    {
         private readonly IBaseRepository<Order> _orderRepository;
         private readonly UserManager<Client> _userManager;
         public OrderService(IBaseRepository<Order> reviewRepository,
@@ -30,7 +30,7 @@ namespace Trasher.BLL.Implementations
                .Where(r => r.OperatorId == operatorId && r.OrderStatus == OrderStatus.Completed)
                .ToList();
 
-                IEnumerable<OrderDTO> closedOrderDTO = Mapper<Order, OrderDTO>.Map(closedOrder);
+                IEnumerable<OrderDTO> closedOrderDTO = DTOMapper<Order, OrderDTO>.Map(closedOrder);
                 return new Response<bool>(200, null, true, true);
             }
             catch (Exception ex)
@@ -78,9 +78,10 @@ namespace Trasher.BLL.Implementations
         {
             try
             {
-                var newOrder = DTOMapper<Order, OrderDTO>.Map(order);
+                var newOrder = Mapper<OrderDTO, Order>.Map(order);
 
                 var client = await _userManager.FindByIdAsync(newOrder.ClientId);
+                newOrder.Client = client;
                 newOrder.ClientId = client.Id;
 
                 await _orderRepository.AddAsync(newOrder);
@@ -101,7 +102,7 @@ namespace Trasher.BLL.Implementations
                                  .GetAllAsync().Result
                                  .Where(request => request.OrderStatus == OrderStatus.InProgress && request.OperatorId == null && request.BrigadeId == null);
 
-                IEnumerable<OrderDTO> unassignedRequestsDTO = Mapper<Order, OrderDTO>.Map(unassignedRequests);
+                IEnumerable<OrderDTO> unassignedRequestsDTO = DTOMapper<Order, OrderDTO>.Map(unassignedRequests);
 
                 return new Response<IEnumerable<OrderDTO>>(200, null, true, unassignedRequestsDTO);
             }
@@ -110,7 +111,6 @@ namespace Trasher.BLL.Implementations
                 return new Response<IEnumerable<OrderDTO>>(500, ex.Message, false, null);
             }
         }
-
         public async Task<IResponse<bool>> UpdateOrder(OrderDTO order)
         {
             try

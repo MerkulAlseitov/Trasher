@@ -29,7 +29,7 @@ namespace Trasher.BLL.Implementations
                 var activeOrders = _orderRepository.GetAllAsync().Result
                     .Where(o => o.BrigadeId == Id && o.OrderStatus == OrderStatus.InProgress);
 
-                var activeOrdersDTO = Mapper<Order, OrderDTO>.Map(activeOrders);
+                var activeOrdersDTO = DTOMapper<Order, OrderDTO>.Map(activeOrders);
 
                 return new Response<IEnumerable<OrderDTO>>(200, null, true, activeOrdersDTO);
             }
@@ -46,7 +46,7 @@ namespace Trasher.BLL.Implementations
                 var closedOrders = _orderRepository.GetAllAsync().Result
                     .Where(o => o.BrigadeId == Id && o.OrderStatus == OrderStatus.Completed);
 
-                var closedOrdersDTO = Mapper<Order, OrderDTO>.Map(closedOrders);
+                var closedOrdersDTO = DTOMapper<Order, OrderDTO>.Map(closedOrders);
 
                 return new Response<IEnumerable<OrderDTO>>(200, null, true, closedOrdersDTO);
             }
@@ -73,7 +73,7 @@ namespace Trasher.BLL.Implementations
 
                 await _orderRepository.Update(order);
 
-return new Response<bool>(200, null, true, true);
+                return new Response<bool>(200, null, true, true);
             }
             catch (Exception ex)
             {
@@ -110,7 +110,6 @@ return new Response<bool>(200, null, true, true);
             try
             {
                 var brigades = _userManager.Users.ToList();
-
                 return new Response<IEnumerable<Brigade>>(200, null, true, brigades);
             }
             catch (Exception ex)

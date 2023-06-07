@@ -16,12 +16,12 @@ namespace Trasher.BLL.Implementations
             _reviewRepository = reviewRepository;
         }
 
-        public  IResponse<IEnumerable<ReviewDTO>> GetReviewsByOrderId(int OrderId)
+        public IResponse<IEnumerable<ReviewDTO>> GetReviewsByOrderId(int OrderId)
         {
             try
             {
-                var reviews =  _reviewRepository.GetAllAsync().Result.Where(review => review.Order.Id == OrderId).ToList();
-                var reviewsDTO = Mapper<Review, ReviewDTO>.Map(reviews);
+                var reviews = _reviewRepository.GetAllAsync().Result.Where(review => review.Order.Id == OrderId).ToList();
+                var reviewsDTO = DTOMapper<Review, ReviewDTO>.Map(reviews);
                 return new Response<IEnumerable<ReviewDTO>>(200, null, true, reviewsDTO);
             }
             catch (Exception ex)
@@ -34,12 +34,12 @@ namespace Trasher.BLL.Implementations
         {
             try
             {
-                if (reviewDTO == null) 
+                if (reviewDTO == null)
                 {
                     throw new ArgumentNullException("Review is null.");
                 }
 
-                var newReview = DTOMapper<Review, ReviewDTO>.Map(reviewDTO);
+                var newReview = Mapper<ReviewDTO, Review>.Map(reviewDTO);
                 await _reviewRepository.AddAsync(newReview);
                 await _reviewRepository.Update(newReview);
 

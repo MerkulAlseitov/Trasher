@@ -14,13 +14,13 @@ namespace Trasher.BLL.Mapping
     {
         public static IEnumerable<T> Map(IEnumerable<Tmodel> sourceCollection)
         {
-            var mapper = DTOUserInitialize<Tmodel, T>.InitializeMapper();
+            var mapper = AutoMapperConfig<Tmodel, T>.Initialize();
             return mapper.Map<IEnumerable<T>>(sourceCollection);
         }
 
         public static T Map(Tmodel source)
         {
-            var mapper = DTOUserInitialize<Tmodel, T>.InitializeMapper();
+            var mapper = AutoMapperConfig<Tmodel, T>.Initialize();
             return mapper.Map<T>(source);
         }
     }
