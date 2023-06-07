@@ -4,11 +4,12 @@ using Trasher.Domain.DTOs;
 namespace Trasher.BLL.Mapping
 {
     public class DTOMapper<T, Tmodel>
-where T : BaseEntityDTO
-where Tmodel : BaseEntity
+        where T : BaseEntity
+        where Tmodel : BaseEntityDTO
     {
-        public static IEnumerable<T> Map(IEnumerable<Tmodel> sourceCollection)
+        public static IEnumerable<Tmodel> Map(IEnumerable<T> sourceCollection)
         {
+
             var mapper = DTOInitialize<T, Tmodel>.InitializeMapper();
             return mapper.Map<IEnumerable<Tmodel>>(sourceCollection);
         }
@@ -18,6 +19,5 @@ where Tmodel : BaseEntity
             var mapper = DTOInitialize<T, Tmodel>.InitializeMapper();
             return mapper.Map<T>(source);
         }
-
     }
 }

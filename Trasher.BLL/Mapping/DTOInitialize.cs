@@ -4,9 +4,9 @@ using Trasher.Domain.DTOs;
 
 namespace Trasher.BLL.Mapping
 {
-    public static class DTOInitialize<Tmodel, T>
-   where Tmodel : BaseEntityDTO
-   where T : BaseEntity
+    public static class DTOInitialize<T, Tmodel>
+            where T : BaseEntity
+           where Tmodel : BaseEntityDTO
     {
         public static IMapper InitializeMapper()
         {
