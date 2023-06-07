@@ -8,7 +8,7 @@ namespace Trasher.BLL.Mapping
     where T : BaseEntity
     where Tmodel : BaseEntityDTO
     {
-        public static IMapper InitializeMapper()
+        public static IMapper DTOInitializeMapper()
         {
             var mapperConfiguration = new MapperConfiguration(cfg =>
             {

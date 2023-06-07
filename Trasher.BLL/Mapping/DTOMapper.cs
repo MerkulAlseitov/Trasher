@@ -3,20 +3,20 @@ using Trasher.Domain.DTOs;
 
 namespace Trasher.BLL.Mapping
 {
-    public class DTOMapper<Tmodel, T>
-where Tmodel : BaseEntityDTO
-where T : BaseEntity
+    public class DTOMapper<T, Tmodel>
+where T : BaseEntityDTO
+where Tmodel : BaseEntity
     {
-        public static IEnumerable<T> Map(IEnumerable<Tmodel> sourceCollection)
+        public static IEnumerable<Tmodel> Map(IEnumerable<T> sourceCollection)
         {
-            var mapper = Initialize<T, Tmodel>.InitializeMapper();
-            return mapper.Map<IEnumerable<T>>(sourceCollection);
+            var mapper = Initialize<Tmodel, T>.DTOInitializeMapper();
+            return mapper.Map<IEnumerable<Tmodel>>(sourceCollection);
         }
 
-        public static T Map(Tmodel source)
+        public static Tmodel Map(T source)
         {
-            var mapper = Initialize<T, Tmodel>.InitializeMapper();
-            return mapper.Map<T>(source);
+            var mapper = Initialize<Tmodel, T>.DTOInitializeMapper();
+            return mapper.Map<Tmodel>(source);
         }
 
     }

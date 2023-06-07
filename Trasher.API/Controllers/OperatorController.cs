@@ -18,7 +18,7 @@ namespace Trasher.API.Controllers
             _ioperatorService = operatorService;
         }
 
-        [HttpGet("activeOrders/{id}")]
+        [HttpGet("GetActiveOrders")]
         public async Task<ActionResult<IResponse<IEnumerable<OrderDTO>>>> GetActiveOrders(string id)
         {
             var response = await _ioperatorService.GetActiveOrders(id);
@@ -29,7 +29,7 @@ namespace Trasher.API.Controllers
             return BadRequest(response.ErrorMassage);
         }
 
-        [HttpGet("closedOrders/{id}")]
+        [HttpGet("GetClosedOrders")]
         public async Task<ActionResult<IResponse<IEnumerable<OrderDTO>>>> GetClosedOrders(string id)
         {
             var response = await _ioperatorService.GetClosedOrders(id);
@@ -40,7 +40,7 @@ namespace Trasher.API.Controllers
             return BadRequest(response.ErrorMassage);
         }
 
-        [HttpPost("acceptOrder")]
+        [HttpPost("AcceptOrder")]
         public async Task<ActionResult<IResponse<bool>>> AcceptOrder([FromForm] int orderId, [FromForm] string id)
         {
             var response = await _ioperatorService.AcceptOrder(orderId, id);
@@ -51,7 +51,7 @@ namespace Trasher.API.Controllers
             return BadRequest(response.ErrorMassage);
         }
 
-        [HttpPost("markOrderAsCompleted")]
+        [HttpPost("MarkOrderAsCompleted")]
         public async Task<ActionResult<IResponse<bool>>> MarkOrderAsCompleted([FromForm] int orderId)
         {
             var response = await _ioperatorService.MarkOrderAsCompleted(orderId);
@@ -62,7 +62,7 @@ namespace Trasher.API.Controllers
             return BadRequest(response.ErrorMassage);
         }
 
-        [HttpGet("allOperators")]
+        [HttpGet("GetAllOperators")]
         public async Task<ActionResult<IResponse<IEnumerable<Operator>>>> GetAllOperators()
         {
             var response = await _ioperatorService.GetAllAsync();
@@ -73,7 +73,7 @@ namespace Trasher.API.Controllers
             return BadRequest(response.ErrorMassage);
         }
 
-        [HttpPut("updateOperator")]
+        [HttpPut("UpdateOperator")]
         public async Task<ActionResult<IResponse<bool>>> UpdateOperator([FromBody] Operator user)
         {
             var response = await _ioperatorService.UpdateAsync(user);
@@ -84,22 +84,13 @@ namespace Trasher.API.Controllers
             return BadRequest(response.ErrorMassage);
         }
 
-        [HttpPost("closeOrderByOperator")]
+        [HttpPost("CloseOrderByOperator")]
         public async Task<ActionResult<IResponse<bool>>> CloseOrderByOperator([FromForm] int orderId, [FromForm] string id)
         {
             var response = await _ioperatorService.CloseOrderByOperator(orderId, id);
             if (response.IsSuccess)
             {
                 return Ok(response.Data);
-            }
-            return BadRequest(response.ErrorMassage);
-        }
-
-        private ActionResult<T> GenerateResponse<T>(IResponse<T> response)
-        {
-            if (response.IsSuccess)
-            {
-                return Ok(response);
             }
             return BadRequest(response.ErrorMassage);
         }

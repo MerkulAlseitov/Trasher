@@ -24,7 +24,7 @@ namespace Trasher.API.Controllers
         }
 
 
-        [HttpGet("activeOrders/{id}")]
+        [HttpGet("GetActiveOrders")]
         public async Task<ActionResult<IResponse<IEnumerable<OrderDTO>>>> GetActiveOrders(string id)
         {
             var response = await _ibrigadeService.GetActiveOrders(id);
@@ -36,7 +36,7 @@ namespace Trasher.API.Controllers
             return BadRequest(response.ErrorMassage);
         }
 
-        [HttpGet("closedOrders/{id}")]
+        [HttpGet("GetClosedOrders")]
         public async Task<ActionResult<IResponse<IEnumerable<OrderDTO>>>> GetClosedOrders(string id)
         {
             var response = await _ibrigadeService.GetClosedOrders(id);
@@ -48,7 +48,7 @@ namespace Trasher.API.Controllers
             return BadRequest(response.ErrorMassage);
         }
 
-        [HttpPost("acceptOrder")]
+        [HttpPost("AcceptOrder")]
         public async Task<ActionResult<IResponse<bool>>> AcceptOrder([FromForm] int orderId, [FromForm] string id)
         {
             var response = await _ibrigadeService.AcceptOrder(orderId, id);
@@ -60,7 +60,7 @@ namespace Trasher.API.Controllers
             return BadRequest(response.ErrorMassage);
         }
 
-        [HttpPost("markOrderAsCompleted")]
+        [HttpPost("MarkOrderAsCompleted")]
         public async Task<ActionResult<IResponse<bool>>> MarkOrderAsCompleted([FromForm] int orderId)
         {
             var response = await _ibrigadeService.MarkOrderAsCompleted(orderId);
@@ -72,7 +72,7 @@ namespace Trasher.API.Controllers
             return BadRequest(response.ErrorMassage);
         }
 
-        [HttpGet("allBrigades")]
+        [HttpGet("GetAllBrigades")]
         public async Task<ActionResult<IResponse<IEnumerable<Brigade>>>> GetAllBrigades()
         {
             var response = await _ibrigadeService.GetAllAsync();
@@ -84,20 +84,10 @@ namespace Trasher.API.Controllers
             return BadRequest(response.ErrorMassage);
         }
 
-        [HttpPut("updateBrigade")]
+        [HttpPut("UpdateBrigade")]
         public async Task<ActionResult<IResponse<bool>>> UpdateBrigade([FromBody] Brigade user)
         {
             var response = await _ibrigadeService.UpdateAsync(user);
-            if (response.IsSuccess)
-            {
-                return Ok(response.Data);
-            }
-
-            return BadRequest(response.ErrorMassage);
-        }
-
-        private ActionResult<T> GenerateResponse<T>(IResponse<T> response)
-        {
             if (response.IsSuccess)
             {
                 return Ok(response.Data);

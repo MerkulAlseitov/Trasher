@@ -10,15 +10,14 @@ namespace Trasher.BLL.Mapping
     {
         public static IEnumerable<Tmodel> Map(IEnumerable<T> sourceCollection)
         {
-            var mapper = Initialize<T, Tmodel>.InitializeMapper();
+            var mapper = Initialize<T, Tmodel>.DTOInitializeMapper();
             return mapper.Map<IEnumerable<Tmodel>>(sourceCollection);
         }
 
         public static Tmodel Map(T source)
         {
-            var mapper = Initialize<T, Tmodel>.InitializeMapper();
+            var mapper = Initialize<T, Tmodel>.DTOInitializeMapper();
             return mapper.Map<Tmodel>(source);
         }
     }
-
 }

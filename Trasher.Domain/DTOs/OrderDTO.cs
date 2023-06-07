@@ -15,6 +15,6 @@ namespace Trasher.Domain.DTOs
         public OrderType OrderType { get; set; }
         public string Comments { get; set; }
 
-        public string ClientId { get; set; }
+        public string? ClientId { get; set; }
     }
 }

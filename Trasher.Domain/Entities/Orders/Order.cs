@@ -12,8 +12,8 @@ namespace Trasher.Domain.Entities.Orders
   
         public int? ReviewId { get; set; }
         public Review? Review { get; set; }
-        public string ClientId { get; set; }
-        public Client Client { get; set; }  
+        public string? ClientId { get; set; }
+        public Client? Client { get; set; }  
         public string? BrigadeId { get; set; }
         public Brigade? Brigade { get; set; }
         public string? OperatorId { get; set; }

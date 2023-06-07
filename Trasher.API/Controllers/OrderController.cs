@@ -33,7 +33,8 @@ namespace Trasher.API.Controllers
             return StatusCode(response.StatusCode, response.ErrorMassage);
         }
 
-        [HttpPut("{orderId}/status")]
+        [HttpPut]
+        [Route("ChangeOrderStatus")]
         public async Task<IActionResult> ChangeOrderStatus(int orderId, OrderStatus newStatus)
         {
             var response = await _iorderService.ChangeOrderStatus(orderId, newStatus);
@@ -46,7 +47,8 @@ namespace Trasher.API.Controllers
             return StatusCode(response.StatusCode, response.ErrorMassage);
         }
 
-        [HttpGet("unassigned")]
+        [HttpGet]
+        [Route("GetUnassignedOrders")]
         public async Task<IActionResult> GetUnassignedOrders()
         {
             var response = await _iorderService.GetUnassignedOrder();
@@ -59,6 +61,7 @@ namespace Trasher.API.Controllers
             return StatusCode(response.StatusCode, response.ErrorMassage);
         }
         [HttpPut]
+        [Route("Update")]
         public async Task<IActionResult> Update(OrderDTO model)
         {
             var response = await _iorderService.UpdateOrder(model);

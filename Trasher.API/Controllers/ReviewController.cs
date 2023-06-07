@@ -18,7 +18,7 @@ namespace Trasher.API.Controllers
             _ireviewService = reviewService;
         }
 
-        [HttpGet("byOrderId/{orderId}")]
+        [HttpGet("GetReviewsByOrderId")]
         public IActionResult GetReviewsByOrderId(int orderId)
         {
             var response = _ireviewService.GetReviewsByOrderId(orderId);
@@ -32,6 +32,7 @@ namespace Trasher.API.Controllers
         }
 
         [HttpPost]
+        [Route("CreateReview")]
         public async Task<IActionResult> CreateReview(ReviewDTO review)
         {
             var response = await _ireviewService.CreateReview(review);
@@ -44,6 +45,7 @@ namespace Trasher.API.Controllers
             return StatusCode(response.StatusCode, response.ErrorMassage);
         }
         [HttpPut]
+        [Route("UpdateReview")]
         public async Task<IActionResult> UpdateReview(ReviewDTO review)
         {
             var response = await _ireviewService.UpdateReview(review);
