@@ -7,7 +7,7 @@ using Trasher.API.MODELS.Response;
 using Trasher.Domain.DTOs;
 using Trasher.Domain.Users;
 
-namespace Trasher.BLL.IClientService
+namespace Trasher.BLL.Interfaces
 {
     public interface IClientService
     {

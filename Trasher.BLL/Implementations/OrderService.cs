@@ -78,7 +78,7 @@ namespace Trasher.BLL.Implementations
         {
             try
             {
-                var newOrder = DTOMapper<OrderDTO, Order>.Map(order);
+                var newOrder = DTOMapper<Order, OrderDTO>.Map(order);
 
                 var client = await _userManager.FindByIdAsync(newOrder.ClientId);
                 newOrder.ClientId = client.Id;
@@ -115,7 +115,7 @@ namespace Trasher.BLL.Implementations
         {
             try
             {
-                var newRequest = DTOMapper<OrderDTO, Order>.Map(order);
+                var newRequest = DTOMapper<Order, OrderDTO>.Map(order);
 
                 await _orderRepository.Update(newRequest);
                 return new Response<bool>(200, null, true, true);

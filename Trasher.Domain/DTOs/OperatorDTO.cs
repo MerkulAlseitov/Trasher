@@ -7,7 +7,7 @@ using Trasher.Domain.Entities.Orders;
 
 namespace Trasher.Domain.DTOs
 {
-    public class OperatorDTO
+    public class OperatorDTO : AppUserDTO
     {
         public string UserName { get; set; }
         public string FirstName { get; set; }

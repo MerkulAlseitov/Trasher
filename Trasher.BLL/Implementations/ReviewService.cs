@@ -39,7 +39,7 @@ namespace Trasher.BLL.Implementations
                     throw new ArgumentNullException("Review is null.");
                 }
 
-                var newReview = DTOMapper<ReviewDTO, Review>.Map(reviewDTO);
+                var newReview = DTOMapper<Review, ReviewDTO>.Map(reviewDTO);
                 await _reviewRepository.AddAsync(newReview);
                 await _reviewRepository.Update(newReview);
 
@@ -60,7 +60,7 @@ namespace Trasher.BLL.Implementations
                     throw new ArgumentNullException("Review is null.");
                 }
 
-                var newReview = DTOMapper<ReviewDTO, Review>.Map(reviewDTO);
+                var newReview = DTOMapper<Review, ReviewDTO>.Map(reviewDTO);
                 await _reviewRepository.Update(newReview);
 
                 return new Response<bool>(200, null, true, true);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trasher.Domain.DTOs
 {
-    public class BrigadeDTO
+    public class BrigadeDTO : AppUserDTO
     {
         public string UserName { get; set; }
         public string FirstName { get; set; }

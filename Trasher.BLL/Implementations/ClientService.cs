@@ -6,10 +6,12 @@ using Trasher.Domain.DTOs;
 using Trasher.Domain.Entities.Orders;
 using Trasher.Domain.Enums;
 using Trasher.Domain.Users;
+using Trasher.BLL.i;
+using Trasher.BLL.Interfaces;
 
 namespace Trasher.BLL.Implementations
 {
-    public class ClientService : IClientService.IClientService
+    public class ClientService : IClientService
 
     {
         private readonly IBaseRepository<Order> _orderRepository;
@@ -21,23 +23,25 @@ namespace Trasher.BLL.Implementations
             _userManager = userManager;
         }
 
-        public async Task<IResponse<bool>> CreateClient(ClientDTO client)
+        public async Task<IResponse<bool>> CreateClient(ClientDTO clientDTO)
         {
             try
             {
-                var existingClient = await _userManager.FindByNameAsync(client.UserName);
+                var existingClient = await _userManager.FindByNameAsync(clientDTO.UserName);
 
                 if (existingClient != null)
                     return new Response<bool>(400, "Username already exists", false, false);
 
-                var clientUser = new Client
-                {
-                    UserName = client.UserName,
-                    Email = client.Email,
-                    FirstName = client.FirstName
-                };
+                var client = DTOUserMapper<ClientDTO, Client>.Map(clientDTO);
 
-                var result = await _userManager.CreateAsync(clientUser, client.Password);
+                //var clientUser = new Client
+                //{
+                //    UserName = client.UserName,
+                //    Email = client.Email,
+                //    FirstName = client.FirstName
+                //};
+
+                var result = await _userManager.CreateAsync(client, clientDTO.Password);
 
                 if (result.Succeeded)
                 {
