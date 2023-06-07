@@ -14,45 +14,79 @@ namespace Trasher.BLL.Implementations
     {
         private readonly IBaseRepository<Order> _orderRepository;
         private readonly UserManager<Operator> _userManager;
+        private readonly UserManager<Brigade> _userManagerBrigade;
 
-        public OperatorService(IBaseRepository<Order> orderRepository, UserManager<Operator> userManager)
+        public OperatorService(IBaseRepository<Order> orderRepository, 
+            UserManager<Operator> userManager, 
+            UserManager<Brigade> userManagerBrigade)
         {
             _orderRepository = orderRepository;
             _userManager = userManager;
+            _userManagerBrigade = userManagerBrigade;
         }
 
-
-        public async Task<IResponse<bool>> CreateOperator(OperatorDTO operatorDTO)
+        public async Task<IResponse<Brigade>> CreateBrigade(BrigadeDTO bdrigademodel)
         {
             try
             {
-                var existingOperator = await _userManager.FindByNameAsync(operatorDTO.FirstName);
-
-                if (existingOperator != null)
-                    return new Response<bool>(400, "Username already exists", false, false);
-
-                var operatorUser = new Operator
+                var userExists = await _userManagerBrigade.FindByNameAsync(bdrigademodel.UserName);
+                if (userExists != null)
                 {
-                    UserName = operatorDTO.UserName,
-                    Email = operatorDTO.Email,
-                    FirstName = operatorDTO.FirstName
+                    throw new UnauthorizedAccessException(" Thsit User already exists! Please check user Name");
+                }
+
+                var user = new Brigade
+                {
+                    Email = bdrigademodel.Email,
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    UserName = bdrigademodel.UserName
                 };
 
-                var result = await _userManager.CreateAsync(operatorUser, operatorDTO.Password);
-
-                if (result.Succeeded)
+                var result = await _userManagerBrigade.CreateAsync(user, bdrigademodel.Password);
+                string userId = user.Id;
+                if (!result.Succeeded)
                 {
-                    return new Response<bool>(200, null, true, true);
+                    throw new UnauthorizedAccessException("User creation failed! Please check user details and try again." +
+                        $"  Identity Errors: Enter correct password");
                 }
-                else
-                {
-                    var errors = result.Errors.Select(e => e.Description).ToList();
-                    return new Response<bool>(400, $"Operator creation failed, Errors: {errors}", false, false);
-                }
+                return new Response<Brigade>(200, null, true, user);
             }
             catch (Exception ex)
             {
-                return new Response<bool>(500, ex.Message, false, false);
+                return new Response<Brigade>(500, ex.Message, false, null);
+            }
+        }
+
+        public async Task<IResponse<Operator>> CreateOperator(OperatorDTO operatormodel)
+        {
+            try
+            {
+
+                var userExists = await _userManager.FindByNameAsync(operatormodel.UserName);
+                if (userExists != null)
+                {
+                    throw new UnauthorizedAccessException(" Thsit User already exists! Please check user Name");
+                }
+
+                var user = new Operator
+                {
+                    Email = operatormodel.Email,
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    UserName = operatormodel.UserName
+                };
+
+                var result = await _userManager.CreateAsync(user, operatormodel.Password);
+                string userId = user.Id;
+                if (!result.Succeeded)
+                {
+                    throw new UnauthorizedAccessException("User creation failed! Please check user details and try again." +
+                        $"  Identity Errors: Enter correct password");
+                }
+                return new Response<Operator>(200, null, true, user);
+            }
+            catch (Exception ex)
+            {
+                return new Response<Operator>(500, ex.Message, false, null);
             }
         }
 

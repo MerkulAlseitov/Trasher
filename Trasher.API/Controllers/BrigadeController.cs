@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Trasher.API.MODELS.Response;
-using Trasher.BLL.IClientService;
 using Trasher.BLL.Implementations;
 using Trasher.Domain.DTOs;
 using Trasher.Domain.Entities.Orders;

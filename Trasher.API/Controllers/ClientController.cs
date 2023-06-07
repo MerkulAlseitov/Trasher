@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Trasher.API.MODELS.Response;
+using Trasher.BLL.Interfaces;
 using Trasher.Domain.DTOs;
 using Trasher.Domain.Users;
 
@@ -105,7 +106,7 @@ namespace Trasher.API.Controllers
         [Route("CreateClient")]
         public async Task<IActionResult> CreateClient([FromBody] ClientDTO client)
         {
-            IResponse<bool> response = await _iclientService.CreateClient(client);
+            IResponse<Client> response = await _iclientService.CreateClient(client);
 
             if (response.IsSuccess)
             {

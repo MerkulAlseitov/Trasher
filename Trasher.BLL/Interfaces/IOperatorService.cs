@@ -24,5 +24,7 @@ namespace Trasher.BLL.Interfaces
         Task<IResponse<bool>> UpdateAsync(Operator user);
 
         Task<IResponse<bool>> CloseOrderByOperator(int orderId, string Id);
+        Task<IResponse<Operator>> CreateOperator(OperatorDTO operatorDTO);
+        Task<IResponse<Brigade>> CreateBrigade(BrigadeDTO bdrigademodel);
     }
 }

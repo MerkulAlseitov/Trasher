@@ -22,42 +22,38 @@ namespace Trasher.BLL.Implementations
             _userManager = userManager;
         }
 
-        public async Task<IResponse<bool>> CreateClient(ClientDTO clientDTO)
+        public async Task<IResponse<Client>> CreateClient(ClientDTO clientModel)
         {
             try
             {
-                var existingClient = await _userManager.FindByNameAsync(clientDTO.UserName);
 
-                if (existingClient != null)
-                    return new Response<bool>(400, "Username already exists", false, false);
-
-                var client = DTOUserMapper<ClientDTO, Client>.Map(clientDTO);
-
-                //var clientUser = new Client
-                //{
-                //    UserName = client.UserName,
-                //    Email = client.Email,
-                //    FirstName = client.FirstName
-                //};
-
-                var result = await _userManager.CreateAsync(client, clientDTO.Password);
-
-                if (result.Succeeded)
+                var userExists = await _userManager.FindByNameAsync(clientModel.UserName);
+                if (userExists != null)
                 {
-                    return new Response<bool>(200, null, true, true);
+                    throw new UnauthorizedAccessException(" Thsit User already exists! Please check user Name");
                 }
-                else
+
+                var user = new Client
                 {
-                    var errors = result.Errors.Select(e => e.Description).ToList();
-                    return new Response<bool>(400, $"Client creation failed errors: {errors}", false, false);
+                    Email = clientModel.Email,
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    UserName = clientModel.UserName
+                };
+
+                var result = await _userManager.CreateAsync(user, clientModel.Password);
+                string userId = user.Id;
+                if (!result.Succeeded)
+                {
+                    throw new UnauthorizedAccessException("User creation failed! Please check user details and try again." +
+                        $"  Identity Errors: Enter correct password");
                 }
+                return new Response<Client>(200, null, true, user);
             }
             catch (Exception ex)
             {
-                return new Response<bool>(500, ex.Message, false, false);
+                return new Response<Client>(500, ex.Message, false, null);
             }
         }
-
         public async Task<IResponse<IEnumerable<OrderDTO>>> GetActiveOrders(string Id)
         {
             try

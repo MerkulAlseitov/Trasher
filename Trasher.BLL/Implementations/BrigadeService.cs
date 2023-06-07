@@ -21,39 +21,6 @@ namespace Trasher.BLL.Implementations
             _userManager = userManager;
         }
 
-        public async Task<IResponse<bool>> CreateBrigade(BrigadeDTO brigadeDTO)
-        {
-            try
-            {
-                var existingOperator = await _userManager.FindByNameAsync(brigadeDTO.UserName);
-
-                if (existingOperator != null)
-                    return new Response<bool>(400, "Username already exists", false, false);
-
-                var operatorUser = new Brigade
-                {
-                    UserName = brigadeDTO.UserName,
-                    Email = brigadeDTO.Email,
-                    FirstName = brigadeDTO.FirstName
-                };
-
-                var result = await _userManager.CreateAsync(operatorUser, brigadeDTO.Password);
-
-                if (result.Succeeded)
-                {
-                    return new Response<bool>(200, null, true, true);
-                }
-                else
-                {
-                    var errors = result.Errors.Select(e => e.Description).ToList();
-                    return new Response<bool>(400, $"Brigade creation failed errors{errors}", false, false);
-                }
-            }
-            catch (Exception ex)
-            {
-                return new Response<bool>(500, ex.Message, false, false);
-            }
-        }
 
         public async Task<IResponse<IEnumerable<OrderDTO>>> GetActiveOrders(string Id)
         {

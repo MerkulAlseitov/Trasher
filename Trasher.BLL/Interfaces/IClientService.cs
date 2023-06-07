@@ -22,6 +22,6 @@ namespace Trasher.BLL.Interfaces
         Task<IResponse<IEnumerable<Client>>> GetAllAsync();
 
         Task<IResponse<bool>> UpdateAsync(Client user);
-        Task<IResponse<bool>> CreateClient(ClientDTO client);
+        Task<IResponse<Client>> CreateClient(ClientDTO client);
     }
 }

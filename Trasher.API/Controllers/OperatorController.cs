@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Trasher.API.MODELS.Response;
+using Trasher.BLL.Implementations;
 using Trasher.BLL.Interfaces;
 using Trasher.Domain.DTOs;
 using Trasher.Domain.Users;
@@ -94,6 +95,33 @@ namespace Trasher.API.Controllers
             }
             return BadRequest(response.ErrorMassage);
         }
+        [HttpPost]
+        [Route("CreateBrigade")]
+        public async Task<IActionResult> CreateBrigade([FromBody] BrigadeDTO brigade)
+        {
+            IResponse<Brigade> response = await _ioperatorService.CreateBrigade(brigade);
+
+            if (response.IsSuccess)
+            {
+                return Ok(response.Data);
+            }
+
+            return BadRequest(response.ErrorMassage);
+        }
+        [HttpPost]
+        [Route("CreateOperator")]
+        public async Task<IActionResult> CreateOperator([FromBody] OperatorDTO ooperator)
+        {
+            IResponse<Operator> response = await _ioperatorService.CreateOperator(ooperator);
+
+            if (response.IsSuccess)
+            {
+                return Ok(response.Data);
+            }
+
+            return BadRequest(response.ErrorMassage);
+        }
+
     }
 }
 
