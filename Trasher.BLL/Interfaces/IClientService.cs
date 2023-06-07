@@ -22,5 +22,6 @@ namespace Trasher.BLL.IClientService
         Task<IResponse<IEnumerable<Client>>> GetAllAsync();
 
         Task<IResponse<bool>> UpdateAsync(Client user);
+        Task<IResponse<bool>> CreateClient(ClientDTO client);
     }
 }

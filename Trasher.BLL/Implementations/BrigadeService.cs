@@ -10,7 +10,7 @@ using Trasher.Domain.Users;
 
 namespace Trasher.BLL.Implementations
 {
-    public class BrigadeService : IBrigadeSrvice
+    public class BrigadeService : IBrigadeService
     {
         private readonly IBaseRepository<Order> _orderRepository;
         private readonly UserManager<Brigade> _userManager;

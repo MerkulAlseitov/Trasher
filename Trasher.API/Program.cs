@@ -26,6 +26,7 @@ builder.Services.AddIdentity<Client, IdentityRole>()
     .AddDefaultTokenProviders();
 builder.Services.AddScoped<IUserStore<Client>, UserStore<Client, IdentityRole, AppDbContext, string>>();
 
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

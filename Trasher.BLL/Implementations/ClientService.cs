@@ -21,23 +21,23 @@ namespace Trasher.BLL.Implementations
             _userManager = userManager;
         }
 
-        public async Task<IResponse<bool>> CreateClient(ClientDTO clientDTO)
+        public async Task<IResponse<bool>> CreateClient(ClientDTO client)
         {
             try
             {
-                var existingClient = await _userManager.FindByNameAsync(clientDTO.UserName);
+                var existingClient = await _userManager.FindByNameAsync(client.UserName);
 
                 if (existingClient != null)
                     return new Response<bool>(400, "Username already exists", false, false);
 
                 var clientUser = new Client
                 {
-                    UserName = clientDTO.UserName,
-                    Email = clientDTO.Email,
-                    FirstName = clientDTO.FirstName
+                    UserName = client.UserName,
+                    Email = client.Email,
+                    FirstName = client.FirstName
                 };
 
-                var result = await _userManager.CreateAsync(clientUser, clientDTO.Password);
+                var result = await _userManager.CreateAsync(clientUser, client.Password);
 
                 if (result.Succeeded)
                 {

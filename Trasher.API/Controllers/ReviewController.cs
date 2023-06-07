@@ -12,16 +12,16 @@ namespace Trasher.API.Controllers
     [ApiController]
     public class ReviewController : ControllerBase
     {
-        private readonly IReviewService _reviewService;
+        private readonly IReviewService _ireviewService;
         public ReviewController(IReviewService reviewService)
         {
-            _reviewService = reviewService;
+            _ireviewService = reviewService;
         }
 
         [HttpGet("byOrderId/{orderId}")]
         public IActionResult GetReviewsByOrderId(int orderId)
         {
-            var response = _reviewService.GetReviewsByOrderId(orderId);
+            var response = _ireviewService.GetReviewsByOrderId(orderId);
 
             if (response.IsSuccess)
             {
@@ -34,7 +34,7 @@ namespace Trasher.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateReview(ReviewDTO review)
         {
-            var response = await _reviewService.CreateReview(review);
+            var response = await _ireviewService.CreateReview(review);
 
             if (response.IsSuccess)
             {
@@ -46,7 +46,7 @@ namespace Trasher.API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateReview(ReviewDTO review)
         {
-            var response = await _reviewService.UpdateReview(review);
+            var response = await _ireviewService.UpdateReview(review);
 
             if (response.IsSuccess)
             {

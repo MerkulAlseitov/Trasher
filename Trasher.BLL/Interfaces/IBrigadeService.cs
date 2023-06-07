@@ -7,9 +7,10 @@ using Trasher.API.MODELS.Response;
 using Trasher.Domain.DTOs;
 using Trasher.Domain.Users;
 
+
 namespace Trasher.BLL.Interfaces
 {
-    internal interface IBrigadeSrvice
+    public interface IBrigadeService
     {
         Task<IResponse<IEnumerable<OrderDTO>>> GetActiveOrders(string Id);
 
