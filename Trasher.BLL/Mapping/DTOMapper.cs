@@ -7,16 +7,16 @@ namespace Trasher.BLL.Mapping
 where T : BaseEntityDTO
 where Tmodel : BaseEntity
     {
-        public static IEnumerable<Tmodel> Map(IEnumerable<T> sourceCollection)
+        public static IEnumerable<T> Map(IEnumerable<Tmodel> sourceCollection)
         {
-            var mapper = Initialize<Tmodel, T>.DTOInitializeMapper();
+            var mapper = DTOInitialize<T, Tmodel>.InitializeMapper();
             return mapper.Map<IEnumerable<Tmodel>>(sourceCollection);
         }
 
-        public static Tmodel Map(T source)
+        public static T Map(Tmodel source)
         {
-            var mapper = Initialize<Tmodel, T>.DTOInitializeMapper();
-            return mapper.Map<Tmodel>(source);
+            var mapper = DTOInitialize<T, Tmodel>.InitializeMapper();
+            return mapper.Map<T>(source);
         }
 
     }
